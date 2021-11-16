@@ -2,8 +2,8 @@
 class Graph:
     # Конструктор класса.
     def __init__(self, m, n):
-        self.hor_vertex = m + 1  # Количество вершин поля по горизонтали.
-        self.vert_vertex = n + 1  # Количество вершин поля по вертикали.
+        self.hor_vertex = n + 1  # Количество вершин поля по горизонтали.
+        self.vert_vertex = m + 1  # Количество вершин поля по вертикали.
         self.vertexes = self.hor_vertex * self.vert_vertex  # Общее количество вершин поля (узлов графа).
         # Установка спика смежных вершин.
         self.adj_list = list()
@@ -91,18 +91,18 @@ class Graph:
     # Приложение для нахождения величины кратчайшего пути для черепашки в поле, размером m * n.
     def app_shortest_path(self, hor_edges, vert_edges):  # Для заданных списков горизонтальных и вертикальных рёбер:
         for node in range(self.vertexes):  # Для каждой вершины:
-            if node < self.vertexes - self.vert_vertex:  # Если вершина не на нижней границе поля:
-                if (node + 1) % self.vert_vertex != 0 or node == 0:  # Если вершина не на правой границе поля:
+            if node < self.vertexes - self.hor_vertex:  # Если вершина не на нижней границе поля:
+                if (node + 1) % self.hor_vertex != 0 or node == 0:  # Если вершина не на правой границе поля:
                     # Соединение текущей вершины с соседней справа.
-                    self.connect(node, node + 1, hor_edges[node - (node + 1) // self.vert_vertex])
+                    self.connect(node, node + 1, hor_edges[node - (node + 1) // self.hor_vertex])
                     # Соединение соседней снизу вершины с текущей.
-                    self.connect(node + self.vert_vertex, node, vert_edges[node])
+                    self.connect(node + self.hor_vertex, node, vert_edges[node])
                 else:  # Иначе (если вершина на правой границе поля):
                     # Соединение только соседней снизу вершины с текущей.
-                    self.connect(node + self.vert_vertex, node, vert_edges[node])
+                    self.connect(node + self.hor_vertex, node, vert_edges[node])
             elif node < self.vertexes - 1:  # Иначе, если вершина не последняя (но на нижней границе поля):
                 # Соединение текущей вершины только с соседней справа.
-                self.connect(node, node + 1, hor_edges[node - node // (self.hor_vertex - 1)])
+                self.connect(node, node + 1, hor_edges[node - (node + 1) // self.hor_vertex])
         start_node = self.vertexes - 1 - n  # Стартовая вершина для черепашки.
         end_node = n  # Конечная вершина для черепашки.
         '''# Вывод графа в виде списка смежных вершин.
@@ -123,8 +123,8 @@ if __name__ == '__main__':
     m = size[0]  # Количество строк (количество рёбер в строке = количество вершин в строке - 1).
     n = size[1]  # Количество столбцов (количество столбцов в строке = количество вершин в стоблце - 1).
     w_graph = Graph(m, n)  # Создание пустого графа заданного размера.
-    input_type = bool(input("Введите '1', если хотите ввести данные вручную, или '0', "
-                            "чтобы создать случайное поле заданного размера: "))
+    input_type = bool(int(input("Введите '1', если хотите ввести данные вручную, или '0', "
+                                "чтобы создать случайное поле заданного размера: ")))
     if input_type is True:  # При вводе '1' данные будут введены вручную:
         print("Построчно вводите веса рёбер слева направо.")
         hor_edges = list()  # Список горизонтальных рёбер.
