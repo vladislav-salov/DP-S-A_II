@@ -5,7 +5,7 @@ class Graph:
         self.hor_vertex = n + 1  # Количество вершин поля по горизонтали.
         self.vert_vertex = m + 1  # Количество вершин поля по вертикали.
         self.vertexes = self.hor_vertex * self.vert_vertex  # Общее количество вершин поля (узлов графа).
-        # Установка спика смежных вершин.
+        # Установка списка смежных вершин.
         self.adj_list = list()
         for i in range(self.vertexes):
             self.adj_list.append([])
@@ -61,20 +61,27 @@ class Graph:
         min_dist[node] = 0  # Заполнение расстояния до стартовой вершины.
         compares += 1  # Увеличение количества сравнений на 1: перед входом в цикл while.
         while len(nodes_to_visit):  # Пока nodes_to_visit не пустой:
+            compares += len(nodes_to_visit)  # Увеличение кол-ва сравнений на кол-во итераций для функции min().
             weight, current_node = min(nodes_to_visit)  # Выбор ближней вершины.
             nodes_to_visit.remove((weight, current_node))  # Удаление этой вершины из списка вершин для посещения.
-            compares += 1  # Увеличение количества сравнений на 1: перед условием if.
             if current_node in visited:  # Если выбранная вершина уже посещена:
                 # Увеличение количества сравнений на кол-во пройденных элементов списка visited.
                 compares += list(visited).index(current_node)
                 continue  # Запуск следующего прохода цикла без выполнения оставшегося тела цикла.
+            # Увеличение кол-ва сравнений на на кол-во пройденных элементов списка visited.
+            compares += len(list(visited))
             visited.add(current_node)  # Добавление выбранной вершины в список посещённых.
             # next_weight - вес из текущей вершины, next_node - прикреплённая вершина, в которую необходимо попасть.
             compares += 1  # Увеличение количества сравнений на 1: перед входом в цикл for.
             for next_node, next_weight in self.adj_list[current_node]:  # Проход по всем соединённым вершинам.
                 # Проверка на оптимальность пути.
+                if next_node in visited:
+                    # Увеличение количества сравнений на кол-во пройденных элементов списка visited в следующем "if".
+                    compares += list(visited).index(next_node)
                 compares += 1  # Увеличение количества сравнений на 1: перед условием if.
                 if weight + next_weight < min_dist[next_node] and next_node not in visited:
+                    # Увеличение количества сравнений на кол-во пройденных элементов списка visited.
+                    compares += len(list(visited))
                     min_dist[next_node] = weight + next_weight  # Обновление расстояния.
                     nodes_to_visit.append((weight + next_weight, next_node))  # Добавление в список для посещения.
                 compares += 1  # Увеличение количества сравнений на 1: с каждой итерацией цикла for.
