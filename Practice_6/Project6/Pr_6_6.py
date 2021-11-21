@@ -1,8 +1,7 @@
 # Класс, реализующий граф и некоторые операции с ним.
 class Graph:
     # Конструктор класса.
-    def __init__(self, m, n, start_weight):
-        self.start_weight = start_weight  # Вес первой вершины, который не учитывается при построении графа.
+    def __init__(self, m, n):
         self.compares_bf = 0  # Количество сравнений при работе метода "грубой силы".
         self.compares_dp = 0  # Количество сравнений при работе метода динамического программирования.
         self.vert_vertex = m  # Количество вершин графа по вертикали.
@@ -52,8 +51,7 @@ class Graph:
 
     # Функция величины кратчайшего пути, методом перебора вершин ("грубой силы").
     def shortest_path_brute_force(self, node1, node2):  # Для заданного узла node1 и другого заданного узла node2:
-        # Возврат величины кратчайшего пути между node1 и node2.
-        return self.brute_force()[node1][node2] + self.start_weight
+        return self.brute_force()[node1][node2]  # Возврат величины кратчайшего пути между node1 и node2.
 
     # Функция восстановления кратчайшего пути между двумя заданными вершинами, методом перебора вершин ("грубой силы").
     def path_restoring_brute_force(self, node1, node2):
@@ -65,7 +63,7 @@ class Graph:
         # Начальный элемент - конечная вершина. Добавление в список номера элемента матрицы.
         visited[0] = (node2 // self.hor_vertex + 1, node2 % self.hor_vertex + 1)
         pre = 1  # Индекс предыдущей вершины.
-        weight = self.shortest_path_brute_force(node1, node2) - self.start_weight  # Вес пути до конечной вершины.
+        weight = self.shortest_path_brute_force(node1, node2)  # Вес пути до конечной вершины.
         self.compares_bf += 1  # Увеличение количества сравнений на 1: перед входом в цикл while.
         while node2 != node1:  # Пока не дошли до начальной вершины:
             self.compares_bf += 1  # Увеличение количества сравнений на 1: перед входом в цикл for.
@@ -75,7 +73,7 @@ class Graph:
                     temp = weight - self.adj_mat[i][node2]  # Определение веса пути из предыдущей вершины.
                     self.compares_bf += 1  # Увеличение количества сравнений на 1: перед условием if.
                     # Если вес совпал с рассчитанным, то из этой вершины был переход.
-                    if temp == self.shortest_path_brute_force(node1, i) - self.start_weight:
+                    if temp == self.shortest_path_brute_force(node1, i):
                         weight = temp
                         node2 = i
                         visited[pre] = (i // self.hor_vertex + 1, i % self.hor_vertex + 1)
@@ -85,7 +83,7 @@ class Graph:
         self.compares_bf += len(visited)  # Увеличение кол-ва сравнений на кол-во пройденных элементов списка visited.
         while (None, None) in visited:
             # Увеличение кол-ва сравнений на кол-во пройденных элементов списка visited.
-            self.compares_bf += list(visited).index((None, None))
+            self.compares_bf += visited.index((None, None))
             visited.remove((None, None))
         return visited[::-1]
 
@@ -129,7 +127,7 @@ class Graph:
 
     # Функция величины кратчайшего пути, методом "Дейкстры".
     def shortest_path_dijkstra(self, node1, node2):  # Для заданного узла node1 и другого заданного узла node2:
-        return self.dijkstra(node1)[node2] + self.start_weight  # Возврат величины кратчайшего пути между node1 и node2.
+        return self.dijkstra(node1)[node2]  # Возврат величины кратчайшего пути между node1 и node2.
 
     # Функция восстановления кратчайшего пути между двумя заданными вершинами, методом "Дейкстры".
     def path_restoring_dijkstra(self, node1, node2):
@@ -141,7 +139,7 @@ class Graph:
         # Начальный элемент - конечная вершина. Добавление в список номера элемента матрицы.
         visited[0] = (node2 // self.hor_vertex + 1, node2 % self.hor_vertex + 1)
         pre = 1  # Индекс предыдущей вершины.
-        weight = self.shortest_path_dijkstra(node1, node2) - self.start_weight  # Вес пути до конечной вершины.
+        weight = self.shortest_path_dijkstra(node1, node2)  # Вес пути до конечной вершины.
         self.compares_dp += 1  # Увеличение количества сравнений на 1: перед входом в цикл while.
         while node2 != node1:  # Пока не дошли до начальной вершины:
             self.compares_dp += 1  # Увеличение количества сравнений на 1: перед входом в цикл for.
@@ -151,7 +149,7 @@ class Graph:
                     temp = weight - self.adj_mat[i][node2]  # Определение веса пути из предыдущей вершины.
                     self.compares_dp += 1  # Увеличение количества сравнений на 1: перед условием if.
                     # Если вес совпал с рассчитанным, то из этой вершины был переход.
-                    if temp == self.shortest_path_dijkstra(node1, i) - self.start_weight:
+                    if temp == self.shortest_path_dijkstra(node1, i):
                         weight = temp
                         node2 = i
                         visited[pre] = (i // self.hor_vertex + 1, i % self.hor_vertex + 1)
@@ -161,7 +159,7 @@ class Graph:
         self.compares_dp += len(visited)  # Увеличение кол-ва сравнений на кол-во пройденных элементов списка visited.
         while (None, None) in visited:
             # Увеличение кол-ва сравнений на кол-во пройденных элементов списка visited.
-            self.compares_dp += list(visited).index((None, None))
+            self.compares_dp += visited.index((None, None))
             visited.remove((None, None))
         return visited[::-1]
 
@@ -189,7 +187,7 @@ class Graph:
         print("________________________________________________________________________________________________")
         print('Метод "грубой силы" для поиска кратчайшего пути.')
         time_a = perf_counter()  # Время перед работой алгоритма.
-        print(f'Величина кратчайшего пути: {self.shortest_path_brute_force(0, self.vertexes - 1)}.')
+        print(f'Величина кратчайшего пути: {self.shortest_path_brute_force(0, self.vertexes - 1)+ matrix_elements[0]}.')
         print(f'Кратчайший маршрут: {self.path_restoring_brute_force(0, self.vertexes - 1)}.')
         time_b = perf_counter()  # Время после работы алгоритма.
         print(f"Затраченное время на работу алгоритма: {time_b - time_a:0.7f} с.")
@@ -197,7 +195,7 @@ class Graph:
         print("________________________________________________________________________________________________")
         print('Метод "Дейкстры" как один из методов динамического программирования для поиска кратчайшего пути.')
         time_a = perf_counter()  # Время перед работой алгоритма.
-        print(f'Величина кратчайшего пути: {self.shortest_path_dijkstra(0, self.vertexes - 1)}.')
+        print(f'Величина кратчайшего пути: {self.shortest_path_dijkstra(0, self.vertexes - 1) + matrix_elements[0]}.')
         print(f'Кратчайший маршрут: {self.path_restoring_dijkstra(0, self.vertexes - 1)}.')
         time_b = perf_counter()  # Время после работы алгоритма.
         print(f"Затраченное время на работу алгоритма: {time_b - time_a:0.7f} с.")
@@ -228,7 +226,7 @@ if __name__ == '__main__':
             for element in range(n):
                 matrix_elements.append(matrix_row_elements[element])
     print("Данные получены. Определяется кратчайший путь от первого элемента матрицы к последнему.")
-    w_graph = Graph(m, n, matrix_elements[0])  # Создание пустого графа заданного размера.
+    w_graph = Graph(m, n)  # Создание пустого графа заданного размера.
     w_graph.app_shortest_path(matrix_elements)  # Нахождение величины кратчайшего пути от первого элемента к последнему.
     print()
     print("Тестирование завершено.")

@@ -13,7 +13,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Pr_6_8_prototype.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
+            <state relative-caret-position="1496">
               <caret line="88" column="25" selection-start-line="88" selection-start-column="25" selection-end-line="88" selection-end-column="25" />
             </state>
           </provider>
@@ -22,8 +22,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Pr_6_8.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="89" column="82" lean-forward="true" selection-start-line="88" selection-start-column="8" selection-end-line="89" selection-end-column="82" />
+            <state relative-caret-position="476">
+              <caret line="82" column="38" lean-forward="true" selection-start-line="82" selection-start-column="38" selection-end-line="82" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -31,8 +31,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Pr_6_6.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1456">
-              <caret line="210" column="36" lean-forward="true" selection-start-line="210" selection-start-column="36" selection-end-line="210" selection-end-column="36" />
+            <state relative-caret-position="193">
+              <caret line="204" lean-forward="true" selection-start-line="204" selection-end-line="204" />
             </state>
           </provider>
         </entry>
@@ -56,18 +56,17 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="80" />
-    <option name="y" value="95" />
-    <option name="width" value="1565" />
-    <option name="height" value="1030" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="122" />
+    <option name="y" value="122" />
+    <option name="width" value="1765" />
+    <option name="height" value="1025" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -79,6 +78,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -219,22 +219,23 @@
       <workItem from="1636921481013" duration="11225000" />
       <workItem from="1637067300118" duration="17000" />
       <workItem from="1637070798457" duration="7872000" />
-      <workItem from="1637159638448" duration="18556000" />
+      <workItem from="1637159638448" duration="20040000" />
+      <workItem from="1637447452314" duration="16036000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="89402000" />
+    <option name="totallyTimeSpent" value="106922000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="878" extended-state="6" />
+    <frame x="98" y="98" width="1412" height="820" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27010724" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3013294" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32931727" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.68940496" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -257,7 +258,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project6$Pr_6_8.coverage" NAME="Pr_6_8 Coverage Results" MODIFIED="1637027642266" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Project6$Pr_6_6.coverage" NAME="Pr_6_6 Coverage Results" MODIFIED="1637445688668" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Project6$Pr_6_6.coverage" NAME="Pr_6_6 Coverage Results" MODIFIED="1637515680266" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Project6$Pr_6_8_prototype.coverage" NAME="Pr_6_8_prototype Coverage Results" MODIFIED="1637443645616" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Project6$Pr_6_8__1_.coverage" NAME="Pr_6_8 (1) Coverage Results" MODIFIED="1637443512788" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
@@ -265,22 +266,22 @@
     <entry file="file://$PROJECT_DIR$/field_edges.txt" />
     <entry file="file://$PROJECT_DIR$/Pr_6_8_prototype.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
+        <state relative-caret-position="1496">
           <caret line="88" column="25" selection-start-line="88" selection-start-column="25" selection-end-line="88" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Pr_6_8.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="89" column="82" lean-forward="true" selection-start-line="88" selection-start-column="8" selection-end-line="89" selection-end-column="82" />
+        <state relative-caret-position="476">
+          <caret line="82" column="38" lean-forward="true" selection-start-line="82" selection-start-column="38" selection-end-line="82" selection-end-column="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Pr_6_6.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1456">
-          <caret line="210" column="36" lean-forward="true" selection-start-line="210" selection-start-column="36" selection-end-line="210" selection-end-column="36" />
+        <state relative-caret-position="193">
+          <caret line="204" lean-forward="true" selection-start-line="204" selection-end-line="204" />
         </state>
       </provider>
     </entry>
