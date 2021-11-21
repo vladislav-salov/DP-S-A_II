@@ -24,10 +24,18 @@ class Graph:
         self.adj_list[node1].append([node2, weight])  # Вставка ребра в список смежных вершин.
         self.adj_mat[node1][node2] = weight  # Вставка ребра в матрицу смежности для алгоритма перебора вершин.
 
+    # Функция копирования матрицы смежности для дальнейшего перезаполнения под матрицу кратчайших путей.
+    def adj_mat_copy(self):
+        adj_matrix = [[None] * self.vertexes for _ in range(self.vertexes)]
+        for i in range(len(self.adj_mat)):
+            for j in range(len(self.adj_mat)):
+                adj_matrix[i][j] = self.adj_mat[i][j]
+        return adj_matrix
+
     # Функция алгоритма перебора вершин (метода "грубой силы").
     def brute_force(self):
         v = len(self.adj_mat)  # Количество узлов графа как длина матрицы смежности.
-        min_dist = self.adj_mat  # Копия матрицы смежности для дальнейшего перезаполнения под матрицу кратчайших путей.
+        min_dist = self.adj_mat_copy()  # Матрица кратчайших путей, изначально являющаяся копией матрицы смежности.
         self.compares_bf += 1  # Подсчёт количества сравнений: первое сравнение перед входом в цикл for.
         for k in range(v):
             self.compares_bf += 1  # Увеличение количества сравнений на 1: перед входом в цикл for.
@@ -49,31 +57,36 @@ class Graph:
 
     # Функция восстановления кратчайшего пути между двумя заданными вершинами, методом перебора вершин ("грубой силы").
     def path_restoring_brute_force(self, node1, node2):
-        visited = [None] * len(self.adj_mat)  # Массив посещённых вершин.
-        visited[0] = node2 + 1  # Начальный элемент - конечная вершина.
+        visited = list()
+        self.compares_bf += 1  # Подсчёт количества сравнений: первое сравнение перед входом в цикл for.
+        for i in range(len(self.adj_mat)):
+            self.compares_bf += 1  # Увеличение количества сравнений на 1: с каждой итерацией цикла for.
+            visited.append((None, None))
+        # Начальный элемент - конечная вершина. Добавление в список номера элемента матрицы.
+        visited[0] = (node2 // self.hor_vertex + 1, node2 % self.hor_vertex + 1)
         pre = 1  # Индекс предыдущей вершины.
-        weight = self.shortest_path_brute_force(node1, node2)  # Вес конечной вершины.
-        self.compares_bf += 1  # Подсчёт количества сравнений: первое сравнение перед входом в цикл while.
+        weight = self.shortest_path_brute_force(node1, node2) - self.start_weight  # Вес пути до конечной вершины.
+        self.compares_bf += 1  # Увеличение количества сравнений на 1: перед входом в цикл while.
         while node2 != node1:  # Пока не дошли до начальной вершины:
             self.compares_bf += 1  # Увеличение количества сравнений на 1: перед входом в цикл for.
             for i in range(len(self.adj_mat)):  # Проход по всем вершинам.
                 self.compares_bf += 2  # Увеличение количества сравнений на 2: перед условием if.
-                if self.adj_mat[i][node2] != float('inf') and self.adj_mat[i][node2] != 0:  # При наличии связи:
+                if self.adj_mat[i][node2] < float('inf') and self.adj_mat[i][node2] != 0:  # При наличии связи:
                     temp = weight - self.adj_mat[i][node2]  # Определение веса пути из предыдущей вершины.
                     self.compares_bf += 1  # Увеличение количества сравнений на 1: перед условием if.
                     # Если вес совпал с рассчитанным, то из этой вершины был переход.
-                    if temp == self.shortest_path_brute_force(node1, i):
+                    if temp == self.shortest_path_brute_force(node1, i) - self.start_weight:
                         weight = temp
                         node2 = i
-                        visited[pre] = i + 1
+                        visited[pre] = (i // self.hor_vertex + 1, i % self.hor_vertex + 1)
                         pre += 1
                 self.compares_bf += 1  # Увеличение количества сравнений на 1: с каждой итерацией цикла for.
             self.compares_bf += 1  # Увеличение количества сравнений на 1: с каждой итерацией цикла while.
         self.compares_bf += len(visited)  # Увеличение кол-ва сравнений на кол-во пройденных элементов списка visited.
-        while None in visited:
+        while (None, None) in visited:
             # Увеличение кол-ва сравнений на кол-во пройденных элементов списка visited.
-            self.compares_bf += list(visited).index(None)
-            visited.remove(None)
+            self.compares_bf += list(visited).index((None, None))
+            visited.remove((None, None))
         return visited[::-1]
 
     # Алгоритм Дейкстры.
@@ -120,31 +133,36 @@ class Graph:
 
     # Функция восстановления кратчайшего пути между двумя заданными вершинами, методом "Дейкстры".
     def path_restoring_dijkstra(self, node1, node2):
-        visited = [None] * len(self.adj_mat)  # Массив посещённых вершин.
-        visited[0] = node2 + 1  # Начальный элемент - конечная вершина.
+        visited = list()
+        self.compares_dp += 1  # Подсчёт количества сравнений: первое сравнение перед входом в цикл for.
+        for i in range(len(self.adj_mat)):
+            self.compares_dp += 1  # Увеличение количества сравнений на 1: с каждой итерацией цикла for.
+            visited.append((None, None))
+        # Начальный элемент - конечная вершина. Добавление в список номера элемента матрицы.
+        visited[0] = (node2 // self.hor_vertex + 1, node2 % self.hor_vertex + 1)
         pre = 1  # Индекс предыдущей вершины.
-        weight = self.shortest_path_dijkstra(node1, node2)  # Вес конечной вершины.
-        self.compares_dp += 1  # Подсчёт количества сравнений: первое сравнение перед входом в цикл while.
+        weight = self.shortest_path_dijkstra(node1, node2) - self.start_weight  # Вес пути до конечной вершины.
+        self.compares_dp += 1  # Увеличение количества сравнений на 1: перед входом в цикл while.
         while node2 != node1:  # Пока не дошли до начальной вершины:
             self.compares_dp += 1  # Увеличение количества сравнений на 1: перед входом в цикл for.
             for i in range(len(self.adj_mat)):  # Проход по всем вершинам.
                 self.compares_dp += 2  # Увеличение количества сравнений на 2: перед условием if.
-                if self.adj_mat[i][node2] != float('inf') and self.adj_mat[i][node2] != 0:  # При наличии связи:
+                if self.adj_mat[i][node2] < float('inf') and self.adj_mat[i][node2] != 0:  # При наличии связи:
                     temp = weight - self.adj_mat[i][node2]  # Определение веса пути из предыдущей вершины.
                     self.compares_dp += 1  # Увеличение количества сравнений на 1: перед условием if.
                     # Если вес совпал с рассчитанным, то из этой вершины был переход.
-                    if temp == self.shortest_path_dijkstra(node1, i):
+                    if temp == self.shortest_path_dijkstra(node1, i) - self.start_weight:
                         weight = temp
                         node2 = i
-                        visited[pre] = i + 1
+                        visited[pre] = (i // self.hor_vertex + 1, i % self.hor_vertex + 1)
                         pre += 1
                 self.compares_dp += 1  # Увеличение количества сравнений на 1: с каждой итерацией цикла for.
             self.compares_dp += 1  # Увеличение количества сравнений на 1: с каждой итерацией цикла while.
         self.compares_dp += len(visited)  # Увеличение кол-ва сравнений на кол-во пройденных элементов списка visited.
-        while None in visited:
+        while (None, None) in visited:
             # Увеличение кол-ва сравнений на кол-во пройденных элементов списка visited.
-            self.compares_dp += list(visited).index(None)
-            visited.remove(None)
+            self.compares_dp += list(visited).index((None, None))
+            visited.remove((None, None))
         return visited[::-1]
 
     # Приложение для нахождения величины кратчайшего пути для черепашки в поле, размером m * n.
@@ -168,18 +186,23 @@ class Graph:
         for row in self.adj_mat:  # Для каждой строки в матрцие смежности:
             print(row)  # Вывод текущей строки списка матрицы смежности.'''
         from time import perf_counter  # Импорт perf_counter из библиотеки time.
+        print("________________________________________________________________________________________________")
         print('Метод "грубой силы" для поиска кратчайшего пути.')
         time_a = perf_counter()  # Время перед работой алгоритма.
         print(f'Величина кратчайшего пути: {self.shortest_path_brute_force(0, self.vertexes - 1)}.')
+        print(f'Кратчайший маршрут: {self.path_restoring_brute_force(0, self.vertexes - 1)}.')
         time_b = perf_counter()  # Время после работы алгоритма.
         print(f"Затраченное время на работу алгоритма: {time_b - time_a:0.7f} с.")
         print(f'Количество выполненных сравнений: {self.compares_bf}.')
-        print('Алгоритм Дейкстры как один из методов динамического программирования для поиска кратчайшего пути.')
+        print("________________________________________________________________________________________________")
+        print('Метод "Дейкстры" как один из методов динамического программирования для поиска кратчайшего пути.')
         time_a = perf_counter()  # Время перед работой алгоритма.
         print(f'Величина кратчайшего пути: {self.shortest_path_dijkstra(0, self.vertexes - 1)}.')
+        print(f'Кратчайший маршрут: {self.path_restoring_dijkstra(0, self.vertexes - 1)}.')
         time_b = perf_counter()  # Время после работы алгоритма.
         print(f"Затраченное время на работу алгоритма: {time_b - time_a:0.7f} с.")
         print(f'Количество выполненных сравнений: {self.compares_dp}.')
+        print("________________________________________________________________________________________________")
 
 
 # Главная функция.
