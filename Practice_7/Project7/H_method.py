@@ -100,6 +100,18 @@ def main():
     print(f"Коэффициент сжатия: k = V(code) / V(text) = L(Huff) / L(ASCII) = "
           f"{volume_code} бит / {ch_quantity * 8} бит ≊ {k}.")
 
+    # Нахождение средней величины и дисперсии.
+    average_value = 0  # Средняя величина.
+    average_quadratic_value = 0  # Средняя квадратичная величина.
+    for ch, freq in Counter(text).items():  # Для каждого символа ch и кол-ва его повторений freq в тексте text:
+        average_value += freq / len(text) * freq  # <вероятность> * <кол-во повторений символа>.
+        average_quadratic_value += freq / len(text) * freq**2  # <вероятность> * <кол-во повторений символа>^(2).
+    variance = average_quadratic_value - average_value**2  # Дисперсия.
+    print(f"Средняя величина: M[X] ≊ {'{:.3f}'.format(average_value)}.")
+    print(f"Квадрат средней величины: M²[X] ≊ {'{:.3f}'.format(average_value**2)}.")
+    print(f"Средняя квадратичная величина: M[X²] ≊ {'{:.3f}'.format(average_quadratic_value)}.")
+    print(f"Дисперсия: D[X] = M[X²] – M²[X] ≊ {'{:.3f}'.format(variance)}.")
+
     # Декодирование текста.
 
     file_decode = open("file_decode.txt", "w", encoding='utf8')
